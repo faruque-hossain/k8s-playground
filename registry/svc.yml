@@ -13,5 +13,5 @@ spec:
     k8s-app: kube-registry-upstream
   ports:
   - name: registry
-    port: 6000
+    port: 5000
     protocol: TCP
