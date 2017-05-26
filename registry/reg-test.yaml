@@ -7,9 +7,9 @@ metadata:
 spec:
   containers:
   - name: registry-demo-container
-    image: localhost:5000/nurrony/alpine
+    image: localhost:5000/my-alpine
     command: ["/bin/echo"]
     args: ["$(DEMO_GREETING)"]
     env:
     - name: DEMO_GREETING
-      value: "Hello from the environment"
+      value: "Hello from the environment again"
