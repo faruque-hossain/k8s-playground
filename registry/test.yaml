@@ -11,5 +11,5 @@ spec:
     command: ["/bin/echo"]
     args: ["$(DEMO_GREETING)"]
     env:
-    - name: DEMO_GREETING
-      value: "Hello from the environment again"
+      - name: DEMO_GREETING
+        value: "Hello from the environment again"
