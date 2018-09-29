@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-pod-burstable
+  namespace: experiments
+  labels:
+    name: qos-pod-burstable
+spec:
+  containers:
+    - name: qos-pod-burstable
+      image: nginx:alpine
+      resources:
+        limits:
+          cpu: '700m'
+        requests:
+          cpu: '700m'

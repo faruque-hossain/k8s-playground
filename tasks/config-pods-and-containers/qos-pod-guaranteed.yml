@@ -1,0 +1,20 @@
+# For a Pod to be given a QoS class of Guaranteed:
+# 1. Every Container in the Pod must have a memory limit and a memory request, and they must be the same.
+# 2. Every Container in the Pod must have a CPU limit and a CPU request, and they must be the same.
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: qos-example-guaranteed
+  namespace: experiments
+spec:
+  containers:
+    - name: nginx-qos
+      image: nginx:alpine
+      resources:
+        limits:
+          memory: '200Mi'
+          cpu: '700m'
+        requests:
+          memory: '200Mi'
+          cpu: '700m'

@@ -1,3 +1,7 @@
+# A Pod is given a QoS class of Burstable if:
+# 1. The Pod does not meet the criteria for QoS class Guaranteed.
+# 2. At least one Container in the Pod has a memory or CPU request.
+
 apiVersion: v1
 kind: Pod
 metadata:

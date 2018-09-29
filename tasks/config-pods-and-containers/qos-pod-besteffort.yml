@@ -1,0 +1,10 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: qos-pod-besteffort
+  labels:
+    name: qos-pod-besteffort
+spec:
+  containers:
+    - name: qos-pod-besteffort
+      image: nginx:alpine
