@@ -1,0 +1,21 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: persistant-vol-in-pod
+  namespace: experiments
+  labels:
+    name: persistant-vol-in-pod
+spec:
+  volumes:
+    - name: nmr-hostpath-pv-500mi
+      persistentVolumeClaim:
+        claimName: nmr-hostpath-pvc
+  containers:
+    - name: task-pv-container
+      image: nginx:alpine
+      ports:
+        - containerPort: 80
+          name: 'http-server'
+      volumeMounts:
+        - mountPath: '/usr/share/nginx/html'
+          name: nmr-hostpath-pv-500mi
