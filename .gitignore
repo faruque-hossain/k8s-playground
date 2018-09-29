@@ -1,3 +1,4 @@
 *.log
 minikube-ssh
 minikube-config
+certs
