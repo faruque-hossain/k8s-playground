@@ -15,12 +15,15 @@ spec:
       image: nginx:alpine
       ports:
         - containerPort: 80
+          name: init-app-port
+
       volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: nmrony-info-files-volume
   initContainers:
     - name: populate-nmrony-info-files-volume
       image: busybox
+      imagePullPolicy: IfNotPresent
       command:
         - wget
         - '-O'

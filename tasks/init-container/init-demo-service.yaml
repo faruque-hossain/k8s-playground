@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: init-demo-service
+spec:
+  selector:
+    name: init-cntr-demo
+  type: NodePort
+  ports:
+    - port: 80
+      name: init-app-port
