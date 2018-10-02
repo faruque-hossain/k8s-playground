@@ -1,0 +1,23 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: liveliness-http-server
+  labels:
+    name: liveliness-http-server
+spec:
+  containers:
+    - name: liveliness-http-server-cntr
+      image: k8s.gcr.io/liveness
+      args:
+        - /server
+      livenessProbe:
+        httpGet:
+          path: /healthz
+          port: 8080
+          httpHeaders:
+            - name: X-Custom-Header
+              value: 'Awesome Rony'
+        initialDelaySeconds: 3
+        periodSeconds: 3
+        failureThreshold: 5
+        successThreshold: 5

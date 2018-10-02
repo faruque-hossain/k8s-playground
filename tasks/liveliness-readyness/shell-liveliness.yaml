@@ -1,0 +1,21 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: liveliness-and-readiness
+  namespace: experiments
+  labels:
+    name: liveliness-and-readiness
+spec:
+  containers:
+    - name: liveliness-and-readiness
+      image: k8s.gcr.io/busybox
+      args:
+        - /bin/sh
+        - -c
+        - touch /tmp/healthy; sleep 120; rm -f /tmp/healthy; sleep 120
+      livenessProbe:
+        exec:
+          command:
+            - cat /tmp/healthy
+        initialDelaySeconds: 5
+        periodSeconds: 2

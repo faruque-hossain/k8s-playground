@@ -1,0 +1,31 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  namespace: experiments
+  name: init-cntr-demo
+  labels:
+    name: init-cntr-demo
+spec:
+  dnsPolicy: Default
+  volumes:
+    - name: nmrony-info-files-volume
+      emptyDir: {}
+  containers:
+    - name: init-cntr-demo-app-cntr
+      image: nginx:alpine
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: nmrony-info-files-volume
+  initContainers:
+    - name: populate-nmrony-info-files-volume
+      image: busybox
+      command:
+        - wget
+        - '-O'
+        - '/downloads/index.html'
+        - https://nmrony.info
+      volumeMounts:
+        - name: nmrony-info-files-volume
+          mountPath: '/downloads'
