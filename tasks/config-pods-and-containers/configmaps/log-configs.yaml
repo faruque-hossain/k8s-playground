@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: log-configs
+  namespace: experiments
+data:
+  log_level: INFO

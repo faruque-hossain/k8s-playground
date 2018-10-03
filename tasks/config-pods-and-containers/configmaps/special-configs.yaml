@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: special-configs
+  namespace: experiments
+data:
+  special.how: very

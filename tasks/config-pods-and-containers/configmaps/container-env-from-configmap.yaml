@@ -1,0 +1,44 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: configmap-env
+  namespace: experiments
+  labels:
+    name: configmap-env
+spec:
+  restartPolicy: Never
+  containers:
+    - name: configmap-env
+      image: k8s.gcr.io/busybox
+      command: ['/bin/sh', '-c', 'env']
+      resources:
+        limits:
+          memory: '200Mi'
+          cpu: '700m'
+        requests:
+          memory: '200Mi'
+          cpu: '700m'
+      # whole configs keys
+      envFrom:
+        - configMapRef:
+            name: game-configs
+        - prefix: NMR_
+          configMapRef:
+            name: log-configs
+      # individual key
+      env:
+        - name: UI_PROPERTIES
+          valueFrom:
+            configMapKeyRef:
+              key: ui.properties # should be mount as configmap vol type
+              name: game-configs
+        - name: SPECIAL_LEVEL_KEY
+          valueFrom:
+            configMapKeyRef:
+              key: special.how
+              name: special-configs
+        - name: LOG_LEVEL
+          valueFrom:
+            configMapKeyRef:
+              key: log_level
+              name: log-configs
