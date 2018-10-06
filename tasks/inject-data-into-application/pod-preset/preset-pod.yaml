@@ -1,0 +1,36 @@
+# You can use a PodPreset object to inject information like secrets, volume mounts, and
+# environment variables etc into pods at creation time.
+kind: PodPreset
+apiVersion: settings.k8s.io/v1alpha1
+metadata:
+  name: allow-database
+  labels:
+    name: podpreset
+spec:
+  selector:
+    matchLabels:
+      role: frontend
+  env:
+    - name: DB_PORT
+      value: '3306'
+  volumeMounts:
+    - mountPath: /cache
+      name: cache-volume
+  volumes:
+    - name: cache-volume
+      emptyDir: {}
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: website
+  labels:
+    app: website
+    role: frontend
+spec:
+  containers:
+    - name: website
+      image: k8s.gcr.io/busybox
+      command:
+        - printenv

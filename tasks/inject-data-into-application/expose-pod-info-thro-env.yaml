@@ -1,0 +1,68 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: expose-pod-cntr-info-envs
+  namespace: experiments
+  labels:
+    name: expose-pod-cntr-info-envs
+spec:
+  restartPolicy: Never
+  containers:
+    - name: expose-pod-cntr-info-envs
+      image: k8s.gcr.io/busybox
+      imagePullPolicy: IfNotPresent
+      command:
+        - sh
+        - '-c'
+      args:
+        - printenv
+      env:
+        # Pod fields values as env vars
+        - name: MY_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: MY_POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: MY_POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        - name: MY_POD_SERVICE_ACCOUNT
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.serviceAccountName
+        # container fields as env vars
+        - name: MY_CPU_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: expose-pod-cntr-info-envs
+              resource: requests.cpu
+        - name: MY_CPU_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: expose-pod-cntr-info-envs
+              resource: limits.cpu
+        - name: MY_MEM_REQUEST
+          valueFrom:
+            resourceFieldRef:
+              containerName: expose-pod-cntr-info-envs
+              resource: requests.memory
+        - name: MY_MEM_LIMIT
+          valueFrom:
+            resourceFieldRef:
+              containerName: expose-pod-cntr-info-envs
+              resource: limits.memory
+      resources:
+        requests:
+          cpu: 125m
+          memory: 32Mi
+        limits:
+          cpu: 250m
+          memory: 64Mi

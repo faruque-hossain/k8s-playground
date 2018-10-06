@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kubernetes-downwardapi-volume
+  namespace: experiments
+  labels:
+    zone: dhaka-bangladesh
+    cluster: experimental-cluster
+    rack: rack-22
+  annotations:
+    build: two
+    builder: Nur Rony
+spec:
+  restartPolicy: Never
+  volumes:
+    - name: podinfo
+      downwardAPI:
+        items:
+          - path: 'labels'
+            fieldRef:
+              fieldPath: metadata.labels
+          - path: 'annotations'
+            fieldRef:
+              fieldPath: metadata.annotations
+  containers:
+    - name: client-container
+      image: k8s.gcr.io/busybox
+      imagePullPolicy: IfNotPresent
+      command: ['sh', '-c']
+      args:
+        - while true; do
+          if [[ -e /etc/podinfo/labels ]]; then
+          echo -en '\n\n'; cat /etc/podinfo/labels; fi;
+          if [[ -e /etc/podinfo/annotations ]]; then
+          echo -en '\n\n'; cat /etc/podinfo/annotations; fi;
+          sleep 5;
+          done;
+      volumeMounts:
+        - name: podinfo
+          mountPath: /etc/podinfo
+          readOnly: true
+      resources:
+        limits:
+          cpu: 100m
+          memory: 32Mi

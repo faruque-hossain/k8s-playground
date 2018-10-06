@@ -1,0 +1,23 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: command-args-in-container
+  namespace: experiments
+  labels:
+    name: command-args-in-container
+spec:
+  restartPolicy: OnFailure
+  containers:
+    - name: command-args-in-container
+      image: gcr.io/google-containers/busybox
+      imagePullPolicy: IfNotPresent
+      resources: {}
+      env:
+        - name: NMR_KUBE_ENV
+          value: 'Hello Nur Rony!!'
+      command:
+        - printenv
+      args:
+        - HOSTNAME
+        - KUBERNETES_PORT
+        - NMR_KUBE_ENV
