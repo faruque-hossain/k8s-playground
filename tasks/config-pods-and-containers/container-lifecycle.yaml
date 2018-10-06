@@ -5,7 +5,12 @@ metadata:
 spec:
   containers:
     - name: lifecycle-demo-container
-      image: nginx:alpine
+      image: k8s.gcr.io/busybox
+      imagePullPolicy: IfNotPresent
+      resources:
+        limits:
+          cpu: 100m
+          memory: 32Mi
       lifecycle:
         postStart:
           exec:

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stateless-app-deployment
+  namespace: experiments
+spec:
+  selector:
+    matchLabels:
+      app: stateless-nginx
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: stateless-nginx
+    spec:
+      containers:
+        - name: stateless-app-cntr
+          image: nginx:1.12-alpine
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: 64Mi
+              cpu: 100m

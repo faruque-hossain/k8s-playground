@@ -8,3 +8,5 @@ spec:
   containers:
     - name: qos-pod-besteffort
       image: nginx:alpine
+      imagePullPolicy: IfNotPresent
+      resources: {}

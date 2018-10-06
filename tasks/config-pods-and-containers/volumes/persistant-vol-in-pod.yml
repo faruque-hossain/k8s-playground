@@ -19,3 +19,7 @@ spec:
       volumeMounts:
         - mountPath: '/usr/share/nginx/html'
           name: nmr-hostpath-pv-500mi
+      resources:
+        limits:
+          cpu: 100m
+          memory: 32Mi

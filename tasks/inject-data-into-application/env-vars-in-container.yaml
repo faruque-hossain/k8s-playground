@@ -9,7 +9,10 @@ spec:
     - name: envar-demo-container
       image: k8s.gcr.io/busybox
       imagePullPolicy: IfNotPresent
-      resources: {}
+      resources:
+        limits:
+          cpu: 100m
+          memory: 32Mi
       env:
         - name: DEMO_GREETING
           value: 'Hello from the environment'
