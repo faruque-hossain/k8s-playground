@@ -1,0 +1,28 @@
+# Headless service for stable DNS entries of StatefulSet members.
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql-stateful-master-service
+  labels:
+    app: mysql-master-service
+spec:
+  clusterIP: None
+  selector:
+    app: mysql-stateful
+  ports:
+    - name: mysql
+      port: 3306
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: mysql-stateful-slave-service
+  labels:
+    app: mysql-slave-service
+spec:
+  selector:
+    app: mysql-stateful
+  ports:
+    - port: 3306
+      name: mysql
